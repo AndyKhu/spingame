@@ -15,6 +15,7 @@ import * as z from "zod"
 import { signIn, useSession } from "next-auth/react"
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { PasswordInput } from "@/components/ui/passwordInput";
 
 const formSchema = z.object({
   username: z.string().min(1, {message: "username required"}),
@@ -69,7 +70,7 @@ const SigninForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" {...field} disabled={form.formState.isSubmitting}/>
+                  <PasswordInput placeholder="password" {...field} disabled={form.formState.isSubmitting}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
