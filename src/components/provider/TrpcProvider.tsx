@@ -6,11 +6,12 @@ import { trpc } from "@/app/_trpc/client";
 import {httpBatchLink} from "@trpc/client"
 
 const TrpcProvider = ({children}:PropsWithChildren) => {
+  console.log( process.env.TRPC_URL)
   const [queryClient] = useState(()=> new QueryClient())
   const [trpcClient] = useState(()=> trpc.createClient({
     links: [
       httpBatchLink({
-        url: process.env.TRPC_URL || "http://localhost:3000/api/trpc",
+        url: process.env.TRPC_URL || "https://spingame.vercel.app/api/trpc",
       })
     ]
   }))
