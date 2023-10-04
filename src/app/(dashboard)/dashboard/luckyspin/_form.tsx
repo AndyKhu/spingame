@@ -9,30 +9,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { luckyspinnerFormType } from "./_config/formconfig";
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import Datepicker from "@/components/ui/datepicker";
 import { Button } from "@/components/ui/button";
-import { TSpinerOption } from "@/lib/type/tspiner";
-import Combobox from "@/components/ui/combobox";
-interface LuckySpinerFormProps {
+import { SpinOptionFormType } from "./_config/formConfig";
+import InputNumber from "@/components/ui/inputNumber";
+import ColorPicker from "@/components/ui/colorPicker";
+interface SpinnerOptionProps {
   headerOption: THeaderOption;
-  form: UseFormReturn<luckyspinnerFormType>;
+  form: UseFormReturn<SpinOptionFormType>;
   EventHandler: {
-    onSubmit: (values: luckyspinnerFormType) => void;
+    onSubmit: (values: SpinOptionFormType) => void;
     onCancel: () => void;
   };
-  priceOption: TSpinerOption[]
 }
 
-const LuckyspinerForm = ({
+const SpinerOptionForm = ({
   headerOption,
   form,
   EventHandler,
-  priceOption
-}: LuckySpinerFormProps) => {
+}: SpinnerOptionProps) => {
   return (
     <>
       <Card>
@@ -48,13 +45,13 @@ const LuckyspinerForm = ({
               <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-2 md:pt-0">
                 <FormField
                   control={form.control}
-                  name="memberId"
+                  name="option"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Member ID</FormLabel>
+                      <FormLabel>Option</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Member ID..."
+                          placeholder="Option..."
                           {...field}
                           disabled={form.formState.isSubmitting}
                         />
@@ -65,16 +62,17 @@ const LuckyspinerForm = ({
                 />
                 <FormField
                   control={form.control}
-                  name="codeVoucher"
+                  name="color"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Code Voucher</FormLabel>
+                      <FormLabel>Color</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Code Voucher..."
+                        {/* <Input
+                          placeholder="Color..."
                           {...field}
                           disabled={form.formState.isSubmitting}
-                        />
+                        /> */}
+                        <ColorPicker {...field} disabled={form.formState.isSubmitting}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -82,12 +80,13 @@ const LuckyspinerForm = ({
                 />
                 <FormField
                   control={form.control}
-                  name="expiredDate"
+                  name="probability"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Expired Date</FormLabel>
+                      <FormLabel>probability</FormLabel>
                         <FormControl>
-                          <Datepicker {...field} disabled={!form.getValues("canExpired") || form.formState.isSubmitting}/>
+                        <InputNumber placeholder="probability..." {...field} onValueChange={field.onChange} disabled={form.formState.isSubmitting } />
+                          {/* <Datepicker {...field} disabled={!form.getValues("canExpired") || form.formState.isSubmitting}/> */}
                         </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -95,25 +94,12 @@ const LuckyspinerForm = ({
                 />
                 <FormField
                   control={form.control}
-                  name="canExpired"
+                  name="forceWin"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Can Expired</FormLabel>
+                      <FormLabel>Force Win</FormLabel>
                       <FormControl className="ml-2">
                         <Checkbox cbtype="form" checked={field.value} onCheckedChange={field.onChange} disabled={form.formState.isSubmitting}/>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Price</FormLabel>
-                      <FormControl className="ml-2">
-                        <Combobox Lists={priceOption} {...field}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -134,4 +120,4 @@ const LuckyspinerForm = ({
   );
 };
 
-export default LuckyspinerForm;
+export default SpinerOptionForm;

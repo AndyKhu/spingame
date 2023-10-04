@@ -4,5 +4,5 @@ export type TMisteri = {
   codeVoucher: string;
   canExpired: boolean;
   expiredDate: Date | string | null;
-  expired: boolean
+  used: boolean
 }

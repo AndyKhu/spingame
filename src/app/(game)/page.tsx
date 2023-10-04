@@ -1,9 +1,11 @@
-const SpinnerPage = () => {
+import { db } from "@/db";
+import SpinerPage from "./_clientPage";
+
+const SpinerGamePage = async () => {
+  const listOption = await db.luckySpinerOption.findMany()
   return (
-    <div>
-      Enter
-    </div>
+    <SpinerPage listOption={listOption}/>
   );
 }
 
-export default SpinnerPage;
+export default SpinerGamePage;

@@ -30,13 +30,13 @@ export const MisteriTableConfig:ColumnDef<TMisteri>[] = [
     )
   },
   {
-    accessorKey: "expired",
-    header: "Expired",
+    accessorKey: "used",
+    header: "Used",
     meta: {
       align:"center"
     },
     cell: ({getValue}) => (
-      <div className="flex justify-center">{getValue()?<XCircle stroke="rgb(239 68 68)"/>:<CheckCircle stroke="rgb(22 163 74)"/>}</div>
+      <div className="flex justify-center">{getValue()?<CheckCircle stroke="rgb(22 163 74)" />: <XCircle stroke="rgb(239 68 68)"/>}</div>
     )
   },
 ]

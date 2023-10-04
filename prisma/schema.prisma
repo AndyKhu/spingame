@@ -22,7 +22,16 @@ model LuckySpiner {
   codeVoucher String
   canExpired Boolean
   expiredDate DateTime?
-  expired Boolean
+  used Boolean
+  price String?
+}
+
+model LuckySpinerOption {
+  id String @id @unique @default(cuid())
+  option String
+  color String
+  probability Int @default(0)
+  forceWin Boolean @default(false)
 }
 
 model Misteribox {
@@ -31,5 +40,5 @@ model Misteribox {
   codeVoucher String
   canExpired Boolean
   expiredDate DateTime?
-  expired Boolean
+  used Boolean
 }

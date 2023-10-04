@@ -7,7 +7,8 @@ export const LuckyformSchema = z.object({
   codeVoucher : z.string().min(1, {message: "code voucher required"}),
   canExpired: z.boolean(),
   expiredDate: z.date().optional().nullable(),
-  expired: z.boolean()
+  used: z.boolean(),
+  price: z.string()
 })
 
 export type luckyspinnerFormType = z.infer<typeof LuckyformSchema>
@@ -18,6 +19,7 @@ export const luckyspinerFormConfig = {
     memberId: '',
     codeVoucher: '',
     canExpired: false,
-    expired: false
+    used: false,
+    price: ''
   },
 }

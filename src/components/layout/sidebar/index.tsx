@@ -60,6 +60,7 @@ const Sidebar = ({ state }: SidebarProps) => {
               title="Misteri Box"
               icon="Gift"
             />
+            <SidebarItem url="/dashboard/luckyspin" title="Lucky Spin Option" icon="Spin" />
           </ul>
         </ScrollArea>
       </motion.div>

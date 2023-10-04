@@ -3,28 +3,24 @@ import DefaultPageContainer, {
   THeaderOption,
 } from "@/components/page-container/defaultPageContainer";
 import { useEffect, useState } from "react";
-import LuckyspinerForm from "./_form";
 import { useForm } from "react-hook-form";
-import {
-  luckyspinerFormConfig,
-  luckyspinnerFormType,
-} from "./_config/formconfig";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/components/ui/use-toast";
 import { TSpiner, TSpinerOption } from "@/lib/type/tspiner";
-import SpinerLists from "./_lists";
 import { useDebounce } from "use-debounce";
+import { SpinOptionFormConfig, SpinOptionFormType } from "./_config/formConfig";
+import SpinerOptionForm from "./_form";
+import SpinnerOptionLists from "./_lists";
 
 interface SpinclientProps {
   data: {
-    Lists: TSpiner[];
+    Lists: TSpinerOption[];
     count: number;
     totalPage: number;
   };
-  priceOption: TSpinerOption[]
 }
 
-const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
+const SpinSetupPageClient = ({ data }: SpinclientProps) => {
   const headerOption: THeaderOption = {
     icon: "Spin",
     title: "Spinner",
@@ -32,8 +28,8 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
   const [tab, setTab] = useState("list");
 
   //Form Setup
-  const form = useForm<luckyspinnerFormType>(luckyspinerFormConfig);
-  const { mutate: createLuckySpiner } = trpc.createLuckySpiner.useMutation({
+  const form = useForm<SpinOptionFormType>(SpinOptionFormConfig);
+  const { mutate: createLuckySpinerOption } = trpc.createLuckySpinerOption.useMutation({
     onSuccess: ({ saveData }) => {
       if (saveData) {
         toast({
@@ -42,7 +38,7 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
           variant: "success",
         });
         form.reset();
-        getLuckySpinerList({ search: searchDebounce, skip: 0 });
+        getLuckySpinerOptionList({ search: searchDebounce, skip: 0 });
       }
       if (!saveData) {
         toast({
@@ -53,7 +49,7 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
       }
     },
   });
-  const { mutate: updateLuckySpiner } = trpc.updateLuckySpiner.useMutation({
+  const { mutate: updateLuckySpinerOption } = trpc.updateLuckySpinerOption.useMutation({
     onSuccess: ({ saveData }) => {
       if (saveData) {
         toast({
@@ -62,7 +58,7 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
           variant: "success",
         });
         form.reset();
-        getLuckySpinerList({ search: searchDebounce, skip: 0 });
+        getLuckySpinerOptionList({ search: searchDebounce, skip: 0 });
       }
       if (!saveData) {
         toast({
@@ -74,11 +70,11 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
     },
   });
   const EventHandler = {
-    onSubmit: (values: luckyspinnerFormType) => {
+    onSubmit: (values: SpinOptionFormType) => {
       if(values.id)
-        updateLuckySpiner(values)
+        updateLuckySpinerOption(values)
       else
-        createLuckySpiner(values);
+        createLuckySpinerOption(values);
     },
     onCancel: () => {
       form.reset();
@@ -86,7 +82,7 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
     },
   };
   //Lists Setup
-  const { mutate: getLuckySpinerList } = trpc.getLuckySpinerList.useMutation({
+  const { mutate: getLuckySpinerOptionList } = trpc.getLuckySpinerOptionList.useMutation({
     onSuccess: ({ Lists, count, totalPage, type }) => {
       setState((prevState) => ({
         ...prevState,
@@ -99,10 +95,10 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
       }));
     },
   });
-  const { mutate: deleteLuckySpiner } = trpc.deleteLuckySpiner.useMutation({
+  const { mutate: deleteLuckySpinerOption } = trpc.deleteLuckySpinerOption.useMutation({
     onSuccess: ({ deleteCount }) => {
       if (deleteCount) {
-        getLuckySpinerList({ search: searchDebounce, skip: 0 });
+        getLuckySpinerOptionList({ search: searchDebounce, skip: 0 });
         setRowSelection({});
         toast({
           title: "Lucky Spiner Deleted",
@@ -132,11 +128,11 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
     },
     handleDelete: () => {
       const selected = Object.keys(rowSelection);
-      deleteLuckySpiner({ listId: selected });
+      deleteLuckySpinerOption({ listId: selected });
     },
     updateTable: (type: boolean) => {
       const updatedPage = type ? state.currentPage + 1 : state.currentPage - 1;
-      getLuckySpinerList({
+      getLuckySpinerOptionList({
         search: searchDebounce,
         skip: (updatedPage - 1) * 10,
         type: type ? "plus" : "minus",
@@ -144,14 +140,14 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
     },
   };
   useEffect(() => {
-    getLuckySpinerList({ search: searchDebounce, skip: 0 });
+    getLuckySpinerOptionList({ search: searchDebounce, skip: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchDebounce]);
 
   return (
     <DefaultPageContainer
       list={
-        <SpinerLists
+        <SpinnerOptionLists
           headerOption={headerOption}
           data={{ state, setState }}
           selection={{ rowSelection, setRowSelection }}
@@ -159,8 +155,7 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
         />
       }
       form={
-        <LuckyspinerForm
-          priceOption={priceOption}
+        <SpinerOptionForm
           headerOption={headerOption}
           form={form}
           EventHandler={EventHandler}
@@ -172,4 +167,4 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
   );
 };
 
-export default LuckyspinPageClient;
+export default SpinSetupPageClient;
