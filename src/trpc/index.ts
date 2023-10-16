@@ -5,27 +5,27 @@ import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 
 export const appRouter = router({
-  register: publicProcedure
-    .input(z.object({
-      username: z.string(),
-      password: z.string()
-    }))
-    .mutation(async ({input}) => {
-      const {username,password} = input
-      const exist = await db.user.findUnique({
-        where: {username: username}
-      })
-      if(exist) throw new TRPCError({code: 'BAD_REQUEST'})
-      const hashedPassword = await bcrypt.hash(password,10)
-      const user = await db.user.create({
-        data: {
-          username: username,
-          password: hashedPassword
-        }
-      })
+  // register: publicProcedure
+  //   .input(z.object({
+  //     username: z.string(),
+  //     password: z.string()
+  //   }))
+  //   .mutation(async ({input}) => {
+  //     const {username,password} = input
+  //     const exist = await db.user.findUnique({
+  //       where: {username: username}
+  //     })
+  //     if(exist) throw new TRPCError({code: 'BAD_REQUEST'})
+  //     const hashedPassword = await bcrypt.hash(password,10)
+  //     const user = await db.user.create({
+  //       data: {
+  //         username: username,
+  //         password: hashedPassword
+  //       }
+  //     })
 
-      return {user}
-  }),
+  //     return {user}
+  // }),
   changePassword: privateProcedure.input(z.object({
     userId: z.string(),
     password: z.string()
