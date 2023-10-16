@@ -20,15 +20,15 @@ interface SpinclientProps {
     Lists: TSpiner[];
     count: number;
     totalPage: number;
-  };
-  priceOption: TSpinerOption[]
+  }
 }
 
-const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
+const LuckyspinPageClient = ({ data}: SpinclientProps) => {
   const headerOption: THeaderOption = {
     icon: "Spin",
     title: "Spinner",
   };
+  const [priceOption,setPriceOption] = useState<TSpinerOption[]>([])
   const [tab, setTab] = useState("list");
 
   //Form Setup
@@ -149,6 +149,16 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
     getLuckySpinerList({ search: searchDebounce, skip: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchDebounce]);
+
+  useEffect(() => {
+    getLuckySpinerOptionListAll()
+  },[])
+
+  const { mutate: getLuckySpinerOptionListAll } = trpc.getLuckySpinerOptionListAll.useMutation({
+    onSuccess: ({ data }) => {
+      setPriceOption(data)
+    },
+  });
 
   return (
     <DefaultPageContainer

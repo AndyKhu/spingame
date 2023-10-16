@@ -221,6 +221,10 @@ export const appRouter = router({
     }),
 
   //Lucky Spiner Option
+  getLuckySpinerOptionListAll: privateProcedure.mutation(async () => {
+    const data = await db.luckySpinerOption.findMany()
+    return {data}
+  }),
   getLuckySpinerOptionList: privateProcedure
     .input(
       z.object({
@@ -335,6 +339,10 @@ export const appRouter = router({
     }),
 
   // Misteri Box
+  getMisteriboxOptionListsAll: privateProcedure.mutation(async () => {
+    const data = await db.misteriboxOption.findMany()
+    return {data}
+  }),
   getMisteriboxOptionLists: privateProcedure
     .input(
       z.object({

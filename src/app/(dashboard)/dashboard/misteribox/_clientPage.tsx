@@ -17,17 +17,17 @@ interface misteriClientProps {
     Lists: TMisteri[];
     count: number;
     totalPage: number;
-  };
-  priceOption: TMisteriOption[]
+  }
 }
 
-const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
+const MisteriPageClient = ({ data }: misteriClientProps) => {
   const headerOption: THeaderOption = {
     icon: "Gift",
     title: "Misteri Box",
   };
   const [tab, setTab] = useState("list");
-
+  
+  const [priceOption,setPriceOption] = useState<TMisteriOption[]>([])
   //Form Setup
   const form = useForm<MisteriFormType>(MisteriFormConfig);
   const { mutate: createMisteribox } = trpc.createMisteribox.useMutation({
@@ -146,6 +146,16 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
     getMisteriboxLists({ search: searchDebounce, skip: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchDebounce]);
+
+  useEffect(() => {
+    getMisteriboxOptionListsAll()
+  },[])
+
+  const { mutate: getMisteriboxOptionListsAll } = trpc.getMisteriboxOptionListsAll.useMutation({
+    onSuccess: ({ data }) => {
+      setPriceOption(data)
+    },
+  });
 
   return (
     <DefaultPageContainer
