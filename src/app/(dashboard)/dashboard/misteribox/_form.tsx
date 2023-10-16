@@ -33,6 +33,7 @@ const MisteriForm = ({
   EventHandler,
   priceOption
 }: MisteriFormProps) => {
+  console.log(priceOption)
   return (
     <>
       <Card>
