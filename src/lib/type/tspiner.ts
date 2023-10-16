@@ -5,7 +5,8 @@ export type TSpiner = {
   canExpired: boolean;
   expiredDate: Date | string | null;
   used: boolean;
-  price: string | null;
+  priceId: string | null
+  price: TSpinerOption | null;
 }
 
 export type TSpinerOption = {

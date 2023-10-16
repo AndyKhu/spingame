@@ -14,36 +14,18 @@ interface SidebarProps {
   };
 }
 const Sidebar = ({ state }: SidebarProps) => {
-  const isMobile = useMediaQuery(768);
-  const open = isMobile? !state.isOpen : state.isOpen
-  const Sidebar_animation = {
-    open: {
-      width: "16rem",
-      transition: {
-        duration: 0.1,
-      },
-    },
-    closed: {
-      width: "0",
-      transition: {
-        duration: 0,
-      },
-    },
-  };
   return (
     <>
       <div
         onClick={() => state.setIsOpen(old => !old)}
         className={cn(
           "fixed inset-0 z-[998] max-h-screen bg-black/50 md:hidden",
-          open ? "block" : "hidden",
+          state.isOpen ? "hidden" : "block",
         )}
       ></div>
-      <motion.div
-        variants={Sidebar_animation}
-        animate={open ? "open" : "closed"}
+      <div
         className={cn(
-          "fixed left-0 z-[999] h-screen overflow-hidden bg-white shadow-sm transition-all duration-300 md:relative",
+          "fixed left-0 z-[999] h-screen overflow-hidden bg-white shadow-sm transition-all duration-300 md:relative", state.isOpen?"w-0 md:w-[16rem] ":"w-[16rem] md:w-0"
         )}
       >
         <div className="flex h-[70px] items-center space-x-3 px-8 shadow-sm">
@@ -61,9 +43,10 @@ const Sidebar = ({ state }: SidebarProps) => {
               icon="Gift"
             />
             <SidebarItem url="/dashboard/luckyspin" title="Lucky Spin Option" icon="Spin" />
+            <SidebarItem url="/dashboard/misteriboxoption" title="Misteri Box Option" icon="Gift" />
           </ul>
         </ScrollArea>
-      </motion.div>
+      </div>
     </>
   );
 };

@@ -5,7 +5,7 @@ export const SpinOptionformSchema = z.object({
   id: z.string().optional(),
   option: z.string(),
   color : z.string(),
-  probability: z.number().min(0).max(100),
+  probability: z.number().min(0).max(10000),
   forceWin: z.boolean(),
 })
 

@@ -7,21 +7,20 @@ import { useForm } from "react-hook-form";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/components/ui/use-toast";
 import { useDebounce } from "use-debounce";
-import { MisteriFormConfig, MisteriFormType } from "./_config/formConfig";
 import MisteriForm from "./_form";
 import MisteriLists from "./_lists";
-import { TMisteri, TMisteriOption } from "@/lib/type/tmisteri";
+import { TMisteriOption } from "@/lib/type/tmisteri";
+import { MisteriFormConfig, MisteriOptionFormType } from "./config/formConfig";
 
 interface misteriClientProps {
   data: {
-    Lists: TMisteri[];
+    Lists: TMisteriOption[];
     count: number;
     totalPage: number;
   };
-  priceOption: TMisteriOption[]
 }
 
-const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
+const MisteriPageClient = ({ data }: misteriClientProps) => {
   const headerOption: THeaderOption = {
     icon: "Gift",
     title: "Misteri Box",
@@ -29,17 +28,17 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
   const [tab, setTab] = useState("list");
 
   //Form Setup
-  const form = useForm<MisteriFormType>(MisteriFormConfig);
-  const { mutate: createMisteribox } = trpc.createMisteribox.useMutation({
+  const form = useForm<MisteriOptionFormType>(MisteriFormConfig);
+  const { mutate: createMisteriOption } = trpc.createMisteriOption.useMutation({
     onSuccess: ({ saveData }) => {
       if (saveData) {
         toast({
-          title: "Misteri Box Saved",
+          title: "Misteri box option Saved",
           description: "Your data has been Save successfully",
           variant: "success",
         });
         form.reset();
-        getMisteriboxLists({ search: searchDebounce, skip: 0 });
+        getMisteriboxOptionLists({ search: searchDebounce, skip: 0 });
       }
       if (!saveData) {
         toast({
@@ -50,16 +49,16 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
       }
     },
   });
-  const { mutate: updateMisteribox } = trpc.updateMisteribox.useMutation({
+  const { mutate: updateMisteriOption } = trpc.updateMisteriOption.useMutation({
     onSuccess: ({ saveData }) => {
       if (saveData) {
         toast({
-          title: "Misteri Box Updated",
+          title: "Misteri Box option Updated",
           description: "Your data has been update successfully",
           variant: "success",
         });
         form.reset();
-        getMisteriboxLists({ search: searchDebounce, skip: 0 });
+        getMisteriboxOptionLists({ search: searchDebounce, skip: 0 });
       }
       if (!saveData) {
         toast({
@@ -71,11 +70,11 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
     },
   });
   const EventHandler = {
-    onSubmit: (values: MisteriFormType) => {
+    onSubmit: (values: MisteriOptionFormType) => {
       if(values.id)
-        updateMisteribox(values)
+        updateMisteriOption(values)
       else
-        createMisteribox(values);
+        createMisteriOption(values);
     },
     onCancel: () => {
       form.reset();
@@ -83,7 +82,7 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
     },
   };
   //Lists Setup
-  const { mutate: getMisteriboxLists } = trpc.getMisteriboxLists.useMutation({
+  const { mutate: getMisteriboxOptionLists } = trpc.getMisteriboxOptionLists.useMutation({
     onSuccess: ({ Lists, count, totalPage, type }) => {
       setState((prevState) => ({
         ...prevState,
@@ -96,10 +95,10 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
       }));
     },
   });
-  const { mutate: deleteMisteribox } = trpc.deleteMisteribox.useMutation({
+  const { mutate: deleteMisteriOption} = trpc.deleteMisteriOption.useMutation({
     onSuccess: ({ deleteCount }) => {
       if (deleteCount) {
-        getMisteriboxLists({ search: searchDebounce, skip: 0 });
+        getMisteriboxOptionLists({ search: searchDebounce, skip: 0 });
         setRowSelection({});
         toast({
           title: "Misteri Box Deleted",
@@ -107,7 +106,7 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
           variant: "success",
         });
         form.reset();
-        getMisteriboxLists({ search: searchDebounce, skip: 0 });
+        getMisteriboxOptionLists({ search: searchDebounce, skip: 0 });
       }
     },
   });
@@ -131,11 +130,11 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
     },
     handleDelete: () => {
       const selected = Object.keys(rowSelection);
-      deleteMisteribox({ listId: selected });
+      deleteMisteriOption({ listId: selected });
     },
     updateTable: (type: boolean) => {
       const updatedPage = type ? state.currentPage + 1 : state.currentPage - 1;
-      getMisteriboxLists({
+      getMisteriboxOptionLists({
         search: searchDebounce,
         skip: (updatedPage - 1) * 10,
         type: type ? "plus" : "minus",
@@ -143,7 +142,7 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
     },
   };
   useEffect(() => {
-    getMisteriboxLists({ search: searchDebounce, skip: 0 });
+    getMisteriboxOptionLists({ search: searchDebounce, skip: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchDebounce]);
 
@@ -161,7 +160,6 @@ const MisteriPageClient = ({ data,priceOption }: misteriClientProps) => {
         <MisteriForm
           headerOption={headerOption}
           form={form}
-          priceOption={priceOption}
           EventHandler={EventHandler}
         />
       }

@@ -32,7 +32,7 @@ const SpinerPage = ({listOption}:SpinnerPageProps) => {
         coupon = getData
         if(childRef.current){
           const winfromOption = listOption.findIndex(item => item.forceWin) === -1? undefined : listOption.findIndex(item => item.forceWin)
-          const winfromCoupon = listOption.findIndex(item => item.id === getData.price) === -1? undefined : listOption.findIndex(item => item.id === getData.price)
+          const winfromCoupon = listOption.findIndex(item => item.id === getData.priceId) === -1? undefined : listOption.findIndex(item => item.id === getData.priceId)
           childRef.current.spin(winfromOption?winfromOption:winfromCoupon)
         }
       }

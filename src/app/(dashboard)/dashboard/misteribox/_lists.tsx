@@ -76,7 +76,7 @@ const MisteriLists = ({headerOption,data,selection,EventHandler}:MisteriListsPro
               <Button disabled={data.state.currentPage===1} onClick={()=> EventHandler.updateTable(false)} size="sm">
                 Previous
               </Button>
-              <Button disabled={data.state.currentPage=== data.state.totalPage} onClick={()=> EventHandler.updateTable(true)} size="sm">
+              <Button disabled={data.state.totalPage === 0  || data.state.currentPage=== data.state.totalPage} onClick={()=> EventHandler.updateTable(true)} size="sm">
                 Next
               </Button>
             </div>

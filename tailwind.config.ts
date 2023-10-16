@@ -75,7 +75,7 @@ module.exports = {
         wiggle: {
           '0%, 100%': { transform: 'rotate(-12deg)' },
           '50%': { transform: 'rotate(12deg)' },
-        }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

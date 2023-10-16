@@ -6,6 +6,7 @@ import { Checkbox } from "./checkbox";
 import { useCallback, useMemo} from "react";
 import { ArrowDown, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "./scroll-area";
 
 interface TableDataProps<TData,TValue> {
   data: TData[]
@@ -98,8 +99,9 @@ const TableData = <TData extends { id?: string | number},TValue>({
     return { row ,event};
   }
   return (
-    <div className="relative w-full overflow-auto border rounded-md">
-      <table className="w-full caption-bottom text-sm">
+    <div className="relative w-full overflow-x-auto border rounded-md">
+      <ScrollArea>
+      <table className="w-full align-middle border-spacing-0 caption-bottom text-sm">
         <thead className="[&_tr]:border-b">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id} className="border-b bg-primary dark:bg-neutral-800 transition-colors data-[state=selected]:bg-muted">
@@ -109,7 +111,7 @@ const TableData = <TData extends { id?: string | number},TValue>({
                 const sort = sorting && getCanSort()
                 const handler = getToggleSortingHandler()
                 return(
-                  <th key={header.id} className={cn("h-12 px-4 text-left align-middle font-medium text-primary-foreground dark:text-muted-foreground ",meta.className)} style={{textAlign: meta.align}}>
+                  <th key={header.id} className={cn("h-12 px-4 text-left whitespace-nowrap align-middle font-medium text-primary-foreground dark:text-muted-foreground ",meta.className)} style={{textAlign: meta.align}}>
                     {header.isPlaceholder?null:
                     <div className={cn(sort && "flex items-center gap-1 transition-colors cursor-pointer border-none rounded bg-none p-0 text-inherit select-none focus-visible:outline-0 focus-visible:shadow-sm hover:text-gray-300 dark:hover:text-gray-200",selectable && "h-4",sort && meta.align == "center" && "justify-center")}
                       onClick={handler} 
@@ -158,6 +160,7 @@ const TableData = <TData extends { id?: string | number},TValue>({
         <tfoot className={"bg-primary font-medium text-primary-foreground"}>
         </tfoot>
       </table>
+      </ScrollArea>
       {data.length === 0 ? (
           <div className="flex flex-col items-center justify-center w-full text-sm text-primary text-center" style={{ height: `44px` }}>
             {empty}

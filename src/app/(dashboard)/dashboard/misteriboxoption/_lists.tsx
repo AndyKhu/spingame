@@ -3,27 +3,27 @@ import { THeaderOption } from "@/components/page-container/defaultPageContainer"
 import { Card } from "@/components/ui/card";
 import { Menuicon } from "@/components/ui/menuIcon";
 import TableData from "@/components/ui/table-data";
-import { TSpiner } from "@/lib/type/tspiner";
 import { Dispatch, SetStateAction } from "react";
 import { Input } from "@/components/ui/input";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PenSquare, Trash2 } from "lucide-react";
-import { SpinerTableConfig } from "./_config/spinerTableConfig";
-interface SpinerListsProps {
+import { TMisteriOption } from "@/lib/type/tmisteri";
+import { MisteriTableConfig } from "./config/column";
+interface MisteriListsProps {
   headerOption: THeaderOption
   data: {
     state: {
       searchFilter: string
-      spinerLists: TSpiner[]
+      misteriLists: TMisteriOption[]
       currentPage: number
       totalData: number
       totalPage: number
     }
     setState: Dispatch<SetStateAction<{
       searchFilter: string
-      spinerLists: TSpiner[]
+      misteriLists: TMisteriOption[]
       currentPage: number
       totalData: number
       totalPage: number
@@ -40,21 +40,21 @@ interface SpinerListsProps {
   }
 }
 
-const SpinerLists = ({headerOption,data,selection,EventHandler}:SpinerListsProps) => {
+const MisteriLists = ({headerOption,data,selection,EventHandler}:MisteriListsProps) => {
   const isMobile = useMediaQuery(768)
   return (
     <>
-      <Card className="w-full">
+      <Card>
         <div className="hidden h-20 items-center space-x-3 px-5 md:flex">
           <Menuicon name={headerOption.icon} />
           <h2 className="text-xl font-bold capitalize">
             {headerOption.title} Lists
           </h2>
         </div>
-        <Card className="md:border-none md:bg-transparent md:shadow-none p-3 w-full">
+        <Card className="md:border-none md:bg-transparent md:shadow-none p-3">
           <div className="flex justify-between items-center flex-wrap mb-3">
             <Input icon="Search" placeholder="Search...." value={data.state.searchFilter} onChange={(e)=>data.setState((prevState) => ({ ...prevState, searchFilter: e.target.value }))} className="w-full sm:w-96"/>
-            <div className={cn("w-full sm:w-auto mt-3 sm:mt-0 gap-3",isMobile?"grid grid-cols-2":"flex")}>
+            <div className={cn("w-full sm:w-auto mt-3 sm:mt-0 gap-3",isMobile?"grid grid-cols-2":"grid grid-cols-2 md:mt-3 xl:mt-0 md:w-full xl:w-auto xl:flex")}>
               <Button size="sm" variant="success" className={cn(Object.keys(selection.rowSelection).length === 1 ?"":"hidden","space-x-2")} onClick={EventHandler.handleEdit}>
                 <PenSquare size={18}/>
                 {isMobile?<span>EDIT</span>:null}
@@ -65,7 +65,9 @@ const SpinerLists = ({headerOption,data,selection,EventHandler}:SpinerListsProps
               </Button>
             </div>
           </div>
-          <TableData data={data.state.spinerLists || []} columns={SpinerTableConfig} selectable sorting selection={selection} />
+          <div>
+            <TableData data={data.state.misteriLists || []} columns={MisteriTableConfig} selectable sorting selection={selection} />
+          </div>
           <div className="flex items-center justify-between mt-3">
             <p className="text-sm text-muted-foreground">
               {data.state.currentPage === 0? 1 : (data.state.currentPage-1)*10+1}-{data.state.currentPage*10 > data.state.totalData ? data.state.totalData : data.state.currentPage*10} of {data.state.totalData}
@@ -85,4 +87,4 @@ const SpinerLists = ({headerOption,data,selection,EventHandler}:SpinerListsProps
   );
 }
 
-export default SpinerLists;
+export default MisteriLists;

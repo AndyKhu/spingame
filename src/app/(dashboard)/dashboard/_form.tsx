@@ -108,12 +108,12 @@ const LuckyspinerForm = ({
                 />
                 <FormField
                   control={form.control}
-                  name="price"
+                  name="priceId"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Price</FormLabel>
                       <FormControl className="ml-2">
-                        <Combobox Lists={priceOption} {...field}/>
+                        <Combobox Lists={priceOption} {...field} name="Price"/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -11,27 +11,22 @@ import {
 } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import Datepicker from "@/components/ui/datepicker";
 import { Button } from "@/components/ui/button";
-import { MisteriFormType } from "./_config/formConfig";
-import { TMisteriOption } from "@/lib/type/tmisteri";
-import Combobox from "@/components/ui/combobox";
+import { MisteriOptionFormType } from "./config/formConfig";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 interface MisteriFormProps {
   headerOption: THeaderOption;
-  form: UseFormReturn<MisteriFormType>;
+  form: UseFormReturn<MisteriOptionFormType>;
   EventHandler: {
-    onSubmit: (values: MisteriFormType) => void;
+    onSubmit: (values: MisteriOptionFormType) => void;
     onCancel: () => void;
   };
-  priceOption: TMisteriOption[]
 }
 
 const MisteriForm = ({
   headerOption,
   form,
   EventHandler,
-  priceOption
 }: MisteriFormProps) => {
   return (
     <>
@@ -48,13 +43,13 @@ const MisteriForm = ({
               <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-2 md:pt-0">
                 <FormField
                   control={form.control}
-                  name="memberId"
+                  name="option"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Member ID</FormLabel>
+                      <FormLabel>Option</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Member ID..."
+                          placeholder="option..."
                           {...field}
                           disabled={form.formState.isSubmitting}
                         />
@@ -65,56 +60,22 @@ const MisteriForm = ({
                 />
                 <FormField
                   control={form.control}
-                  name="codeVoucher"
+                  name="category"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Code Voucher</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Code Voucher..."
-                          {...field}
-                          disabled={form.formState.isSubmitting}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="expiredDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Expired Date</FormLabel>
+                      <FormLabel>Category</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <Datepicker {...field} disabled={!form.getValues("canExpired") || form.formState.isSubmitting}/>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Category"/>
+                        </SelectTrigger>
                         </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="canExpired"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Can Expired</FormLabel>
-                      <FormControl className="ml-2">
-                        <Checkbox cbtype="form" checked={field.value} onCheckedChange={field.onChange} disabled={form.formState.isSubmitting}/>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="priceId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Price</FormLabel>
-                      <FormControl className="ml-2">
-                        <Combobox Lists={priceOption} {...field} name="Price"/>
-                      </FormControl>
+                        <SelectContent>
+                          <SelectItem value="emas">Emas</SelectItem>
+                          <SelectItem value="uang">Uang</SelectItem>
+                          <SelectItem value="iphone">Iphone</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}

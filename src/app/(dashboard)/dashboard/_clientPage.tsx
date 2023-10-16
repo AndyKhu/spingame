@@ -78,7 +78,9 @@ const LuckyspinPageClient = ({ data ,priceOption}: SpinclientProps) => {
       if(values.id)
         updateLuckySpiner(values)
       else
-        createLuckySpiner(values);
+      createLuckySpiner(values);
+      
+      form.reset()
     },
     onCancel: () => {
       form.reset();

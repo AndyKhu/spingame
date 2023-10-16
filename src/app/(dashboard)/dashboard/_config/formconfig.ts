@@ -8,7 +8,7 @@ export const LuckyformSchema = z.object({
   canExpired: z.boolean(),
   expiredDate: z.date().optional().nullable(),
   used: z.boolean(),
-  price: z.string()
+  priceId: z.string().optional()
 })
 
 export type luckyspinnerFormType = z.infer<typeof LuckyformSchema>
@@ -20,6 +20,6 @@ export const luckyspinerFormConfig = {
     codeVoucher: '',
     canExpired: false,
     used: false,
-    price: ''
+    priceId: undefined
   },
 }

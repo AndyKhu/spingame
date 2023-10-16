@@ -47,7 +47,9 @@ const DefaultPageContainer = ({list,form,tabs,headerOption}:PageProps) => {
         <TabsContent value="list">
         <div className="h-[calc(100vh-174px)]">
           <ScrollArea className="h-full w-full rounded-lg">
-            {list}
+            <div className="grid grid-cols-1">
+              {list}
+            </div>
           </ScrollArea>
         </div>
         </TabsContent>

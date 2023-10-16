@@ -22,8 +22,8 @@ import {
 
 interface ComboboxProps<T> {
   Lists: T []
-  value: string
-  onChange: (e:string) => void,
+  value?: string
+  onChange: (e?:string) => void,
   name?: string
   disabled?:boolean
   id?:string
@@ -59,7 +59,7 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps<any>>(
                 <CommandItem
                       key={"null-item"}
                       onSelect={() => {
-                        onChange("-")
+                        onChange(undefined)
                         setOpen(false)
                       }}
                 >

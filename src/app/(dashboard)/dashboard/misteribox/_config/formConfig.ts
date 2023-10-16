@@ -7,7 +7,8 @@ export const MisteriformSchema = z.object({
   codeVoucher : z.string().min(1, {message: "code voucher required"}),
   canExpired: z.boolean(),
   expiredDate: z.date().optional().nullable(),
-  used: z.boolean()
+  used: z.boolean(),
+  priceId: z.string().optional()
 })
 
 export type MisteriFormType = z.infer<typeof MisteriformSchema>
@@ -18,6 +19,7 @@ export const MisteriFormConfig = {
     memberId: '',
     codeVoucher: '',
     canExpired: false,
-    used: false
+    used: false,
+    priceId: undefined
   },
 }
