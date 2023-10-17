@@ -18,7 +18,9 @@ export const authOptions:NextAuthOptions = {
                 if(!credentials?.username || !credentials.password)
                     return null
                 const user = await db.user.findUnique({
-                    where: {username: credentials.username}
+                    where: {
+                        username: credentials.username.toLowerCase()
+                    }
                 })
                 if(user && await bcrypt.compare(credentials.password, user.password)){
                     user.password=""

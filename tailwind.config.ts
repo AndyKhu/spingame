@@ -56,7 +56,8 @@ module.exports = {
         },
       },
       backgroundImage: {
-        'game': "url('/bg.webp')",
+        'game': "url('/bgpanglima.webp')",
+        'game2': "url('/bg.webp')",
       },
       borderRadius: {
         lg: "var(--radius)",

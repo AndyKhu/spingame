@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import Wheels from "@/components/ui/wheels";
 import { TSpiner, TSpinerOption } from "@/lib/type/tspiner";
 import { useRef, useState } from "react";
-import { trpc } from "../_trpc/client";
 import { toast } from "@/components/ui/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Confetti from "@/components/ui/confetti";
@@ -13,6 +12,7 @@ import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { PartyPopper, X } from "lucide-react";
 import Link from "next/link";
+import { trpc } from "@/app/_trpc/client";
 interface SpinnerPageProps {
   listOption: TSpinerOption[]
 }
@@ -70,7 +70,7 @@ const SpinerPage = ({listOption}:SpinnerPageProps) => {
     setDialog(false)
   }
   return (
-    <div className="flex items-center justify-center bg-game bg-bottom bg-cover h-screen flex-col overflow-hidden">
+    <div className="flex items-center justify-center bg-game2 bg-bottom bg-cover h-screen flex-col overflow-hidden">
       {dialog && <div className="fixed inset-0 z-[1000] flex justify-center items-center">
         <div className="absolute bg-black inset-0 z-[1000] bg-opacity-70 backdrop-filter backdrop-blur-[3px] backdrop-brightness-10"></div>
         <Card className="relative px-10 py-14 z-[1001] text-center">
@@ -94,8 +94,10 @@ const SpinerPage = ({listOption}:SpinnerPageProps) => {
         </Card>
       </div>}
       <ScrollArea className="w-full max-h-full h-full bg-black bg-opacity-30">
-          <div className="flex justify-center">
-            <Image priority src="/logo.png" width={330} height={150} alt="logo" className="my-2"/>
+          <div className="flex justify-center p-5">
+            <div className="p-1 bg-black/70 rounded-md">
+              <Image priority src="/MHKT.gif" width={260} height={126} alt="logo" className="mb-5"/>
+            </div>
           </div>
           <div className="flex items-center justify-center flex-col p-5 pt-0">
             <Wheels ref={childRef} segments={listOption} defaultSize={700} onFinish={onFinish}/>

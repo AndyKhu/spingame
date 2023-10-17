@@ -171,7 +171,7 @@ const MisteriBoxClientPage = ({data}:MBGProps) => {
   }
   const { mutate: updateCouponMB } = trpc.updateCouponMB.useMutation()
   return (
-    <div className="flex justify-center items-center h-screen w-screen py-0 lg:py-10 bg-game bg-cover bg-bottom">
+    <div className="flex justify-center items-center h-screen w-screen py-0 lg:py-5 bg-game2 bg-cover bg-bottom">
       {dialog && <div className="fixed inset-0 z-[1000] flex justify-center items-center">
         <div className="absolute bg-black inset-0 z-[1000] bg-opacity-70 backdrop-filter backdrop-blur-[3px] backdrop-brightness-10"></div>
         <Card className="relative px-10 py-14 z-[1001] text-center">
@@ -195,15 +195,17 @@ const MisteriBoxClientPage = ({data}:MBGProps) => {
         </Card>
       </div>}
       {dialog && <Confetti/>}
-      <ScrollArea className="w-full max-h-full h-full bg-black/50 max-w-6xl lg:rounded-md">
+      <ScrollArea className="w-full max-h-full h-full bg-black/50 max-w-6xl lg:rounded-md pb-5">
         <div className="flex w-full justify-between p-5 pb-0">
           <Button size="icon" onClick={handlePlaysound}>
             {muted?<VolumeX/>:<Volume2/>}
           </Button>
           <Button onClick={()=>handleShowPrice(!showPrice)}>Show Price</Button>
         </div>
-        <div className="flex justify-center">
-          <Image priority src="/logo.png" width={330} height={150} alt="logo" className="mb-5"/>
+        <div className="flex justify-center p-5 mb-5">
+          <div className="p-1 bg-black/70 rounded-md">
+            <Image priority src="/MHKT.gif" width={260} height={126} alt="logo" className="mb-5"/>
+          </div>
         </div>
         <div className="grid grid-cols-[130px_130px] justify-center  lg:grid-cols-[250px_250px_250px_250px] gap-5 w-full">
          {box.map((item,index)=> (

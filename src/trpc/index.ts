@@ -427,9 +427,9 @@ export const appRouter = router({
   checkCoupon: publicProcedure.input(z.object({memberId: z.string(),codeVoucher: z.string()})).mutation(async ({input}) => {
     const data = {...input}
     const getData = await db.luckySpiner.findFirst({where: {
-      memberId: data.memberId,
-      codeVoucher: data.codeVoucher,
-      used: false
+      memberId: {equals:data.memberId,mode:'insensitive'},
+      codeVoucher: {equals: data.codeVoucher,mode:'insensitive'},
+      used: false,
     },include:{price:true}})
     if(getData?.canExpired && getData.expiredDate && getData.expiredDate < new Date()){
       return {getData: null}
@@ -440,8 +440,8 @@ export const appRouter = router({
   checkCouponMB: publicProcedure.input(z.object({memberId: z.string(),codeVoucher: z.string()})).mutation(async ({input}) => {
     const data = {...input}
     const getData = await db.misteribox.findFirst({where: {
-      memberId: data.memberId,
-      codeVoucher: data.codeVoucher,
+      memberId: {equals:data.memberId,mode:'insensitive'},
+      codeVoucher: {equals: data.codeVoucher,mode:'insensitive'},
       used: false
     },include:{price:true}})
     if(getData?.canExpired && getData.expiredDate && getData.expiredDate < new Date()){

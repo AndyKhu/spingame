@@ -57,6 +57,7 @@ export default function Confetti() {
         pointerEvents: 'none',
         width: '100%',
         height: '100%',
+        zIndex: 1001,
         top: 0,
         left: 0
       }}
